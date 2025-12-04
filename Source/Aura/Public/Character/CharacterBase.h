@@ -33,10 +33,12 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	TObjectPtr<USkeletalMeshComponent> Weapons;
 
-	// 创建下面两个指针用于后续的GAS。角色的属性将会使用这些，但是敌人的属性将写到敌人类内部。
+	// 创建两个指针用于后续的GAS。角色的属性将会使用这些，但是敌人的属性将写到敌人类内部。
 	UPROPERTY()
 	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
 
 	UPROPERTY()
 	TObjectPtr<UAttributeSet> AttributeSet;
+
+	virtual void InitAbilityActorInfo(); // 初始化Actor信息，绑定AbilitySystemComponent委托等
 };

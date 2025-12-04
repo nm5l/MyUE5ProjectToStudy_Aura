@@ -2,6 +2,7 @@
 
 
 #include "Character/CharacterBase.h"
+#include "AbilitySystemComponent.h"
 
 // Sets default values
 ACharacterBase::ACharacterBase()
@@ -25,6 +26,10 @@ UAbilitySystemComponent* ACharacterBase::GetAbilitySystemComponent() const
 void ACharacterBase::BeginPlay()
 {
 	Super::BeginPlay();
+}
+
+void ACharacterBase::InitAbilityActorInfo()
+{
 
 }
 

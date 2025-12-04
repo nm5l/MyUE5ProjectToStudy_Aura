@@ -13,16 +13,53 @@
  	GAMEPLAYATTRIBUTE_VALUE_SETTER(PropertyName) \
  	GAMEPLAYATTRIBUTE_VALUE_INITTER(PropertyName)
 
-/**
- *
- */
+USTRUCT()
+struct FEffectProperties {
+	GENERATED_BODY()
+
+	FEffectProperties() {}
+
+	FGameplayEffectContextHandle EffectContextHandle;
+
+	UPROPERTY()
+	UAbilitySystemComponent* SourceASC = nullptr;
+
+	UPROPERTY()
+	AActor* SourceAvatarActor = nullptr;
+
+	UPROPERTY()
+	AController* SourceController = nullptr;
+
+	UPROPERTY()
+	ACharacter* SourceCharacter = nullptr;
+
+	UPROPERTY()
+	UAbilitySystemComponent* TargetASC = nullptr;
+
+	UPROPERTY()
+	AActor* TargetAvatarActor = nullptr;
+
+	UPROPERTY()
+	AController* TargetController = nullptr;
+
+	UPROPERTY()
+	ACharacter* TargetCharacter = nullptr;
+
+};
+
 UCLASS()
 class AURA_API UAuraAttributeSet : public UAttributeSet
 {
 	GENERATED_BODY()
+
 public:
 	UAuraAttributeSet();
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+
+	// PreAttributeChange 是 Unreal Engine 5 Gameplay Ability System 中 UAttributeSet 类的一个虚函数，用于在属性（Attribute）值修改之前进行预处理。
+	virtual void PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue) override;
+	// PostGameplayEffectExecute 是 Gameplay Ability System(GAS) 中 UAttributeSet 的回调之一。它在一个 GameplayEffect 的 modifier 已经被计算并应用到属性之后调用。
+	virtual void PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data) override;
 
 	// 将变量标记为可复制，用于客户端和服务器之间的同步与协调
 	/*属性创建流程：
@@ -61,5 +98,6 @@ public:
 
 	UFUNCTION()
 	void OnRep_MaxMana(const FGameplayAttributeData& OldMaxMana) const;
-
+private:
+	void SetEffectProperties(const FGameplayEffectModCallbackData& Data, FEffectProperties& Props) const;
 };

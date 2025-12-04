@@ -42,7 +42,14 @@ void AEnemyCharacter::UnHighlightActor()
 void AEnemyCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+	InitAbilityActorInfo();
+}
+
+void AEnemyCharacter::InitAbilityActorInfo()
+{
 	// 初始化敌人类能力角色信息
 	// 参数：初始化的能力所有者，化身角色，
 	AbilitySystemComponent->InitAbilityActorInfo(this, this);
+	// 初始化后调用AbilityActorInfoSet
+	Cast<UAuraAbilitySystemComponent>(AbilitySystemComponent)->AbilityActorInfoSet();
 }

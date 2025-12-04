@@ -77,4 +77,7 @@ protected:
 
 	TMap<FActiveGameplayEffectHandle, UAbilitySystemComponent*> ActiveEffectHandles;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "应用效果Applied Effects")
+	float ActorLevel = 1.f; // 道具的等级，配合曲线每一级的效果都可以不同。比如每一级的药水回复量不同
+
 };

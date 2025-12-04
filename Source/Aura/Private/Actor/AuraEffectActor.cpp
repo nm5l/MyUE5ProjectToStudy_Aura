@@ -38,7 +38,7 @@ void AAuraEffectActor::AppliedEffectsToTarget(AActor* TargetActor, TSubclassOf<U
 	FGameplayEffectContextHandle EffectContextHandle = TargetASC->MakeEffectContext();
 	EffectContextHandle.AddSourceObject(this);
 	// 创建 GameplayEffectSpec（效果规格）规格Spec = “效果的实例化数据”，比如：10点伤害，5秒持续时间，是否暴击，Buff/DeBuff数值等
-	FGameplayEffectSpecHandle EffectSpecHandle = TargetASC->MakeOutgoingSpec(GameplayEffectClass, 1.f, EffectContextHandle);
+	FGameplayEffectSpecHandle EffectSpecHandle = TargetASC->MakeOutgoingSpec(GameplayEffectClass, ActorLevel, EffectContextHandle);
 	//施加 GameplayEffect，将刚创建的 GameplayEffectSpec 应用到 TargetASC
 	FActiveGameplayEffectHandle ActiveEffectHandle = TargetASC->ApplyGameplayEffectSpecToSelf(*EffectSpecHandle.Data.Get());
 
