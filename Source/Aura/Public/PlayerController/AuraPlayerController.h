@@ -38,8 +38,7 @@ private:
 	void Move(const FInputActionValue& InputActionValue);
 
 	void CursorTrace(); // PlayerTick调用，用于获取鼠标下的actor
-
-	TObjectPtr<IEnemyInterface> LastActor;
-	TObjectPtr<IEnemyInterface> ThisActor;
+	TObjectPtr<IEnemyInterface> LastActor; // 上一帧鼠标下的actor
+	TObjectPtr<IEnemyInterface> ThisActor; // 本帧鼠标下的actor
 
 };

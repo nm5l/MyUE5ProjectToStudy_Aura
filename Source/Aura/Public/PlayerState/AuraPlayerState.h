@@ -19,16 +19,27 @@ class AURA_API AAuraPlayerState : public APlayerState, public IAbilitySystemInte
 	GENERATED_BODY()
 public:
 	AAuraPlayerState();
+	// 重写PlayerState中的虚函数用于属性复制
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
 	// 重写IAbilitySystemInterface中的虚函数用于获取能力系统组件，正如该函数名一样。
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 	// 类似的，属性也可以这样写一个get方法
 	UAttributeSet* GetAttributeSet() const { return AttributeSet; }
+	// 获取等级
+	FORCEINLINE int32 GetPlayerLevel() const { return Level; }
 
 protected:
-	UPROPERTY()
+	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
 
 	UPROPERTY()
 	TObjectPtr<UAttributeSet> AttributeSet;
+
+private:
+	UPROPERTY(VisibleAnywhere, ReplicatedUsing = OnRep_Level)
+	int32 Level = 1;
+
+	UFUNCTION()
+	void OnRep_Level(int32 OldLevel);
 };

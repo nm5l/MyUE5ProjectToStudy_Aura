@@ -17,6 +17,9 @@ public:
 	APlayerCharacter();
 	virtual void PossessedBy(AController* NewController) override; // 将pawn与控制器联系起来
 	virtual void OnRep_PlayerState() override; // 在PlayerState指针变化时调用，用于客户端响应状态更新
+
+	// CombatInterface
+	virtual int32 GetPlayerLevel() override;
 private:
 	void InitAbilityActorInfo() override; // 用于初始化角色能力信息。有的代码要重复用所以创建函数来代替复制粘贴
 

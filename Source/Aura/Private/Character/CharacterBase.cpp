@@ -33,4 +33,21 @@ void ACharacterBase::InitAbilityActorInfo()
 
 }
 
+void ACharacterBase::ApplyEffectToSelf(TSubclassOf<UGameplayEffect> GameplayEffectClass, float Level) const
+{
+	check(GameplayEffectClass); // 确保传入的效果类存在
+	check(IsValid(GetAbilitySystemComponent())); // 确保能力系统组件有效
+	// 应用默认的属性效果到自己身上，这一段是AI写的，默认就是这么写的
+	FGameplayEffectContextHandle EffectContextHandle = GetAbilitySystemComponent()->MakeEffectContext(); // 创建效果上下文
+	FGameplayEffectSpecHandle SpecHandle = GetAbilitySystemComponent()->MakeOutgoingSpec(GameplayEffectClass, Level, EffectContextHandle); // 创建效果规格
+	GetAbilitySystemComponent()->ApplyGameplayEffectSpecToTarget(*SpecHandle.Data.Get(), GetAbilitySystemComponent()); // 这个Data里面存储了效果规格，应用到自己身上
+}
+
+void ACharacterBase::InitializeDefaultAttributes() const
+{
+	ApplyEffectToSelf(DefaultPrimaryAttributes, 1.f);
+	ApplyEffectToSelf(DefaultSecondaryAttributes, 1.f);
+	ApplyEffectToSelf(DefaultVitalAttributes, 1.f);
+}
+
 

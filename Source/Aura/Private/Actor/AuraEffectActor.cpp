@@ -36,7 +36,7 @@ void AAuraEffectActor::AppliedEffectsToTarget(AActor* TargetActor, TSubclassOf<U
 	check(GameplayEffectClass);
 	// 创建 GameplayEffectContext（作用环境) EffectContext 是用来“记录伤害/治疗来源”等上下文信息的结构。
 	FGameplayEffectContextHandle EffectContextHandle = TargetASC->MakeEffectContext();
-	EffectContextHandle.AddSourceObject(this);
+	EffectContextHandle.AddSourceObject(this); // 将这个EffectActor作为来源对象添加进去
 	// 创建 GameplayEffectSpec（效果规格）规格Spec = “效果的实例化数据”，比如：10点伤害，5秒持续时间，是否暴击，Buff/DeBuff数值等
 	FGameplayEffectSpecHandle EffectSpecHandle = TargetASC->MakeOutgoingSpec(GameplayEffectClass, ActorLevel, EffectContextHandle);
 	//施加 GameplayEffect，将刚创建的 GameplayEffectSpec 应用到 TargetASC

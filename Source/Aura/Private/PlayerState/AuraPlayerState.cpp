@@ -5,6 +5,7 @@
 #include "AbilitySystemInterface.h"
 #include "AbilitySystem/AuraAbilitySystemComponent.h"
 #include "AbilitySystem/AuraAttributeSet.h"
+#include "Net/UnrealNetwork.h"
 
 AAuraPlayerState::AAuraPlayerState()
 {
@@ -24,7 +25,19 @@ AAuraPlayerState::AAuraPlayerState()
 	NetUpdateFrequency = 100.f; // 网络更新频率 用于同步客户端
 }
 
+void AAuraPlayerState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+	// GetLifetimeReplicatedProps的功能是注册需要在网络中同步的属性
+	DOREPLIFETIME(AAuraPlayerState, Level); // 注册Level属性用于网络同步
+}
+
 UAbilitySystemComponent* AAuraPlayerState::GetAbilitySystemComponent() const
 {
 	return AbilitySystemComponent;
+}
+
+void AAuraPlayerState::OnRep_Level(int32 OldLevel)
+{
+
 }

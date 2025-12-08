@@ -39,6 +39,12 @@ void AEnemyCharacter::UnHighlightActor()
 
 }
 
+int32 AEnemyCharacter::GetPlayerLevel()
+{
+
+	return Level;
+}
+
 void AEnemyCharacter::BeginPlay()
 {
 	Super::BeginPlay();
