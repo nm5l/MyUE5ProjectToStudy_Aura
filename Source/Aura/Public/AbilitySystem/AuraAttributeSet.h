@@ -13,6 +13,12 @@
  	GAMEPLAYATTRIBUTE_VALUE_SETTER(PropertyName) \
  	GAMEPLAYATTRIBUTE_VALUE_INITTER(PropertyName)
 
+// typedef TBaseStaticDelegateInstance<FGameplayAttribute(), FDefaultDelegateUserPolicy>::FFuncPtr FAttributeGetterFuncPtr; // 用于存储属性获取函数指针的类型定义，不够泛用
+// 改为更泛用的模板类型定义
+template<class T>
+using TStaticFunPtr = typename TBaseStaticDelegateInstance<T, FDefaultDelegateUserPolicy>::FFuncPtr;
+
+
 
 // 用于存储GameplayEffect相关的属性信息
 USTRUCT()
@@ -64,6 +70,12 @@ public:
 	// PostGameplayEffectExecute 是 Gameplay Ability System(GAS) 中 UAttributeSet 的回调之一。它在一个 GameplayEffect 的 modifier 已经被计算并应用到属性之后调用。
 	virtual void PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data) override;
 
+	// 用于将GameplayTag映射到对应的属性获取函数
+	// TMap<FGameplayTag, TBaseStaticDelegateInstance<FGameplayAttribute(), FDefaultDelegateUserPolicy>::FFuncPtr> TagsToAttributes;
+	TMap<FGameplayTag, TStaticFunPtr<FGameplayAttribute()>> TagsToAttributes; // 更泛用的模板类型定义
+
+
+
 	// 将变量标记为可复制，用于客户端和服务器之间的同步与协调
 	/*属性创建流程：
 		1. 添加一个UPROPERTY变量，一定要设置ReplicatedUsing = OnRep_<变量名>
@@ -97,11 +109,11 @@ public:
 	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, Intelligence);
 
 	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Resilience, Category = "主要属性 Primary Attributes")
-	FGameplayAttributeData Resilience; // 恢复力
+	FGameplayAttributeData Resilience; // 韧性
 	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, Resilience);
 
 	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Vigor, Category = "主要属性 Primary Attributes")
-	FGameplayAttributeData Vigor; // 精力
+	FGameplayAttributeData Vigor; // 活力
 	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, Vigor);
 
 

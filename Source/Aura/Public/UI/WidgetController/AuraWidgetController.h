@@ -25,7 +25,7 @@ class UAttributeSet;
 */
 
 USTRUCT(BlueprintType)
-struct FWidgetControllerParams
+struct FWidgetControllerParams // 这个结构体用于传递初始化参数
 {
 	GENERATED_BODY()
 
@@ -55,8 +55,9 @@ class AURA_API UAuraWidgetController : public UObject
 	GENERATED_BODY()
 public:
 	UFUNCTION(BlueprintCallable)
-	void SetWidgetControllerParams(const FWidgetControllerParams& WCParams); // 初始化的方法
+	void SetWidgetControllerParams(const FWidgetControllerParams& WCParams); // 设置控件控制器参数
 
+	UFUNCTION(BlueprintCallable)
 	virtual void BroadcastInitalValues(); // 用于广播初始值 子类实现
 
 	virtual void BindCallbacksToDependencies(); // 绑定回调依赖项 用于响应绑定的属性变化
