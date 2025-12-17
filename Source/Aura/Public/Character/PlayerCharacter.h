@@ -15,7 +15,7 @@ class AURA_API APlayerCharacter : public ACharacterBase
 	GENERATED_BODY()
 public:
 	APlayerCharacter();
-	virtual void PossessedBy(AController* NewController) override; // 将pawn与控制器联系起来
+	virtual void PossessedBy(AController* NewController) override; // 这个函数在角色被控制器拥有时调用，用于服务器端初始化
 	virtual void OnRep_PlayerState() override; // 在PlayerState指针变化时调用，用于客户端响应状态更新
 
 	// CombatInterface

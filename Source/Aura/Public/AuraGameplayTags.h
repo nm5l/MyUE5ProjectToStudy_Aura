@@ -18,13 +18,17 @@ public:
 
 	// FGameplayTag是一个结构体定义在GameplayTagContainer.h，用于表示单个Gameplay Tag
 
-	// 主要属性标签
+	/*
+	 *
+	 *主要属性标签*/
 	FGameplayTag Attributes_Primary_Strength; // 力量
 	FGameplayTag Attributes_Primary_Intelligence; // 智力
 	FGameplayTag Attributes_Primary_Resilience; // 韧性
 	FGameplayTag Attributes_Primary_Vigor; // 活力
 
-	// 次要属性标签
+	/*
+	 *
+	 *次要属性标签*/
 	FGameplayTag Attributes_Secondary_Armor;			// 护甲
 	FGameplayTag Attributes_Secondary_ArmorPenetration; // 护甲穿透
 	FGameplayTag Attributes_Secondary_BlockChance;		// 格挡几率
@@ -35,6 +39,20 @@ public:
 	FGameplayTag Attributes_Secondary_ManaRegeneration; // 法力恢复
 	FGameplayTag Attributes_Secondary_MaxHealth;		// 最大生命值
 	FGameplayTag Attributes_Secondary_MaxMana;			// 最大法力值
+
+	/*
+	 *
+	 *输入动作标签*/
+
+	FGameplayTag InputTag_LMB; // 左键点击
+	FGameplayTag InputTag_RMB; // 右键点击
+	FGameplayTag InputTag_1;
+	FGameplayTag InputTag_2;
+	FGameplayTag InputTag_3;
+	FGameplayTag InputTag_4;
+
+
+
 protected:
 
 private:

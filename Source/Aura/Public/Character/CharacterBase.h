@@ -10,6 +10,7 @@
 class UAbilitySystemComponent;
 class UAttributeSet;
 class UGameplayEffect;
+class UGameplayAbility;
 
 UCLASS(Abstract)
 class AURA_API ACharacterBase : public ACharacter, public IAbilitySystemInterface, public ICombatInterface
@@ -34,10 +35,10 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	TObjectPtr<USkeletalMeshComponent> Weapons;
 
-	// 创建两个指针用于后续的GAS。角色的属性将会使用这些，但是敌人的属性将写到敌人类内部。
+	// 创建两个指针用于后续的GAS。
 	UPROPERTY()
 	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
-
+	// 角色的属性将会使用这个AttributeSet，但是敌人的属性将写到敌人类内部。
 	UPROPERTY()
 	TObjectPtr<UAttributeSet> AttributeSet;
 
@@ -67,5 +68,11 @@ protected:
 	// 初始化属性
 	void InitializeDefaultAttributes() const;
 	void ApplyEffectToSelf(TSubclassOf<UGameplayEffect> GameplayEffectClass, float Level) const; // 应用GameplayEffect到自己
+
+	void AddCharacterAbilities(); // 添加角色初始能力
+
+private:
+	UPROPERTY(EditAnywhere, Category = "Abilities")
+	TArray<TSubclassOf<UGameplayAbility>> StartupAbilities; // 暴露给蓝图设置，初始能力列表
 
 };

@@ -3,6 +3,7 @@
 
 #include "Character/CharacterBase.h"
 #include "AbilitySystemComponent.h"
+#include <AbilitySystem/AuraAbilitySystemComponent.h>
 
 // Sets default values
 ACharacterBase::ACharacterBase()
@@ -41,6 +42,18 @@ void ACharacterBase::ApplyEffectToSelf(TSubclassOf<UGameplayEffect> GameplayEffe
 	FGameplayEffectContextHandle EffectContextHandle = GetAbilitySystemComponent()->MakeEffectContext(); // 创建效果上下文
 	FGameplayEffectSpecHandle SpecHandle = GetAbilitySystemComponent()->MakeOutgoingSpec(GameplayEffectClass, Level, EffectContextHandle); // 创建效果规格
 	GetAbilitySystemComponent()->ApplyGameplayEffectSpecToTarget(*SpecHandle.Data.Get(), GetAbilitySystemComponent()); // 这个Data里面存储了效果规格，应用到自己身上
+}
+
+void ACharacterBase::AddCharacterAbilities()
+{
+	// 只在服务器上添加初始能力
+	if (!HasAuthority()) return; // 检查是否有权限
+	UAuraAbilitySystemComponent* AuraASC = Cast<UAuraAbilitySystemComponent>(AbilitySystemComponent);
+
+	AuraASC->AddCharacterAbilities(StartupAbilities); // 调用AbilitySystemComponent的方法添加能力
+
+
+
 }
 
 void ACharacterBase::InitializeDefaultAttributes() const

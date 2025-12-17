@@ -2,9 +2,12 @@
 
 
 #include "PlayerController/AuraPlayerController.h"
+
+#include "AbilitySystemBlueprintLibrary.h"
 #include "Interaction/EnemyInterface.h"
 #include "EnhancedInputSubsystems.h"
-#include "EnhancedInputComponent.h"
+#include "AbilitySystem/AuraAbilitySystemComponent.h"
+#include "Input/AuraInputComponent.h"
 #include "Math/RotationMatrix.h"
 
 AAuraPlayerController::AAuraPlayerController()
@@ -74,6 +77,16 @@ void AAuraPlayerController::CursorTrace()
 
 }
 
+UAuraAbilitySystemComponent* AAuraPlayerController::GetASC()
+{
+	if (AuraAbilitySystemComponent == nullptr)
+	{
+		// 通过AbilitySystemBlueprintLibrary静态函数获取AbilitySystemComponent并转换为AuraAbilitySystemComponent类型
+		AuraAbilitySystemComponent = Cast<UAuraAbilitySystemComponent>(UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(GetPawn<APawn>()));
+	}
+	return AuraAbilitySystemComponent;
+}
+
 void AAuraPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
@@ -109,11 +122,13 @@ void AAuraPlayerController::SetupInputComponent()
 	Super::SetupInputComponent();
 
 	// 父类中InputComponent输入组件类型为UInputComponent，这里将其转换为UEnhancedInputComponent类型（注意添加头文件）
-	UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(InputComponent); // CastCheck函数同时完成转类型与检查工作
+	UAuraInputComponent* AuraInputComponent = CastChecked<UAuraInputComponent>(InputComponent); // CastCheck函数同时完成转类型与检查工作
 
+	// 绑定动作与回调
 	// 绑定动作：绑定到MoveAction，持续触发，绑定该控制器，动作函数Move
-	EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AAuraPlayerController::Move);
-
+	AuraInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AAuraPlayerController::Move);
+	// 绑定技能动作：绑定到InputConfig配置，绑定该控制器，按下函数，释放函数，持续按压函数
+	AuraInputComponent->BindAbilityActions(InputConfig, this, &ThisClass::AbilityInputTagPressed, &ThisClass::AbilityInputTagReleased, &ThisClass::AbilityInputTagHeld);
 }
 
 void AAuraPlayerController::Move(const FInputActionValue& InputActionValue)
@@ -131,7 +146,23 @@ void AAuraPlayerController::Move(const FInputActionValue& InputActionValue)
 
 	}
 
-
-
 }
+
+void AAuraPlayerController::AbilityInputTagPressed(FGameplayTag InputTag)
+{
+	// GEngine->AddOnScreenDebugMessage(1, 5.f, FColor::Red, FString::Printf(TEXT("按压技能标签: %s"), *InputTag.ToString()));
+}
+
+void AAuraPlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
+{
+	if (GetASC() == nullptr) return;
+	GetASC()->AbilityInputTagReleased(InputTag); // 将输入标签释放事件传递给AbilitySystemComponent处理
+}
+
+void AAuraPlayerController::AbilityInputTagHeld(FGameplayTag InputTag)
+{
+	if (GetASC() == nullptr) return;
+	GetASC()->AbilityInputTagHeld(InputTag); // 将输入标签持续按压事件传递给AbilitySystemComponent处理
+}
+
 

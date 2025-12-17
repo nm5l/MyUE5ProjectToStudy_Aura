@@ -30,6 +30,7 @@ void APlayerCharacter::PossessedBy(AController* NewController)
 
 	// 为服务器初始化角色能力信息
 	InitAbilityActorInfo();
+	AddCharacterAbilities();
 }
 
 void APlayerCharacter::OnRep_PlayerState()
