@@ -29,6 +29,11 @@ void ACharacterBase::BeginPlay()
 	Super::BeginPlay();
 }
 
+FVector ACharacterBase::GetCombatSocketLocation()
+{
+	return Weapons->GetSocketLocation(WeaponTipSocketName); // 返回武器插槽的位置
+}
+
 void ACharacterBase::InitAbilityActorInfo()
 {
 

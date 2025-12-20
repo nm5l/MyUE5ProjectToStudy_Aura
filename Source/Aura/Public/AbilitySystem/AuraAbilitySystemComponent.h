@@ -30,5 +30,6 @@ public:
 
 protected:
 	// 回调函数，当效果应用到自身时调用
-	void EffectApplied(UAbilitySystemComponent* AbilitySystemComponent, const FGameplayEffectSpec& EffectSpec, FActiveGameplayEffectHandle ActiveGameplayEffectHandle);
+	UFUNCTION(Client, Reliable) // 客户端可靠调用
+		void ClientEffectApplied(UAbilitySystemComponent* AbilitySystemComponent, const FGameplayEffectSpec& EffectSpec, FActiveGameplayEffectHandle ActiveGameplayEffectHandle);
 };

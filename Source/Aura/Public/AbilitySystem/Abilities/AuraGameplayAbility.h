@@ -16,6 +16,6 @@ class AURA_API UAuraGameplayAbility : public UGameplayAbility
 
 public:
 	UPROPERTY(EditDefaultsOnly, Category = "Input")
-	FGameplayTag StartupInputTag; // 能力的启动输入标签，用于标识该能力对应的输入操作，在蓝图中给到对应的标签
+	FGameplayTag StartupInputTag; // 这个标签给到蓝图设置对应按键的标签，从而实现绑定按键输入。也就是按键设置。
 
 };

@@ -9,7 +9,7 @@ void UAuraAbilitySystemComponent::AbilityActorInfoSet()
 {
 	// 调用该函数说明Actor信息初始化完成（InitActorInfo）
 	// 绑定委托与回调函数
-	OnGameplayEffectAppliedDelegateToSelf.AddUObject(this, &UAuraAbilitySystemComponent::EffectApplied);
+	OnGameplayEffectAppliedDelegateToSelf.AddUObject(this, &UAuraAbilitySystemComponent::ClientEffectApplied);
 
 
 
@@ -64,7 +64,7 @@ void UAuraAbilitySystemComponent::AbilityInputTagReleased(const FGameplayTag& In
 	}
 }
 
-void UAuraAbilitySystemComponent::EffectApplied(UAbilitySystemComponent* AbilitySystemComponent, const FGameplayEffectSpec& EffectSpec, FActiveGameplayEffectHandle ActiveGameplayEffectHandle)
+void UAuraAbilitySystemComponent::ClientEffectApplied_Implementation(UAbilitySystemComponent* AbilitySystemComponent, const FGameplayEffectSpec& EffectSpec, FActiveGameplayEffectHandle ActiveGameplayEffectHandle)
 {
 	// OnGameplayEffectAppliedDelegateToSelf委托的回调函数
 

@@ -14,7 +14,7 @@ APlayerCharacter::APlayerCharacter()
 {
 	// 角色默认设置
 	GetCharacterMovement()->bOrientRotationToMovement = true;			// 视角朝向移动方向
-	GetCharacterMovement()->RotationRate = FRotator(0.f, 400.f, 0.f);	// 转向速度400
+	GetCharacterMovement()->RotationRate = FRotator(0.f, 1200.f, 0.f);	// 转向速度400
 	GetCharacterMovement()->bConstrainToPlane = true;					// 限制Z轴移动
 	GetCharacterMovement()->bSnapToPlaneAtStart = true;					// 自动调整对齐到平面
 

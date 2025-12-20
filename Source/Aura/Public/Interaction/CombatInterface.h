@@ -22,5 +22,7 @@ class AURA_API ICombatInterface
 
 	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
-	virtual int32 GetPlayerLevel();
+	virtual int32 GetPlayerLevel(); // 获取玩家等级
+
+	virtual FVector GetCombatSocketLocation(); // 获取战斗插槽位置
 };

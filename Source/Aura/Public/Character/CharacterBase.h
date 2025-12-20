@@ -28,12 +28,16 @@ public:
 
 
 protected:
-	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 	// 武器插槽
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	TObjectPtr<USkeletalMeshComponent> Weapons;
+
+	UPROPERTY(EditAnywhere, Category = "Combat")
+	FName WeaponTipSocketName;
+
+	virtual FVector GetCombatSocketLocation() override;
 
 	// 创建两个指针用于后续的GAS。
 	UPROPERTY()
